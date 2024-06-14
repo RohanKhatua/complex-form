@@ -3,13 +3,14 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { BacktestingForm } from '../types';
 import { BacktestingFormSchema } from '../types';
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage} from '../components/ui/form';
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '../components/ui/form';
 import { Input } from '../components/ui/input';
 import { Button } from '../components/ui/button';
-import { Select } from '../components/ui/select';
 import 'tailwindcss/tailwind.css';
+import useStore from '@/store';
 
 const BacktestingForm: React.FC = () => {
+    const { formData, setFormData } = useStore();
     const form = useForm<BacktestingForm>({
         resolver: zodResolver(BacktestingFormSchema),
         defaultValues: {
@@ -39,7 +40,7 @@ const BacktestingForm: React.FC = () => {
     });
 
     const onSubmit = (data: BacktestingForm) => {
-        console.log(data);
+        setFormData(data);
     };
 
     return (
@@ -123,12 +124,12 @@ const BacktestingForm: React.FC = () => {
                             <FormItem>
                                 <FormLabel>Data Frequency</FormLabel>
                                 <FormControl>
-                                    <Select {...field}>
-                                        <option value="">Select Frequency</option>
+                                    <select {...field}>
+
                                         <option value="Daily">Daily</option>
                                         <option value="Weekly">Weekly</option>
                                         <option value="Monthly">Monthly</option>
-                                    </Select>
+                                    </select>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -148,9 +149,11 @@ const BacktestingForm: React.FC = () => {
                         errors={form.formState.errors}
                     />
                 ))}
-                <Button type="button" onClick={() => appendSuperStrategy({ name: '', strategies: [
-                    { type: '', parameters: '' },
-                ] })}>
+                <Button type="button" onClick={() => appendSuperStrategy({
+                    name: '', strategies: [
+                        { type: '', parameters: '' },
+                    ]
+                })}>
                     Add Super Strategy
                 </Button>
                 {form.formState.errors.superStrategies && <span className="text-red-500">{form.formState.errors.superStrategies.message}</span>}
@@ -164,12 +167,12 @@ const BacktestingForm: React.FC = () => {
                             <FormItem>
                                 <FormLabel>Order Type</FormLabel>
                                 <FormControl>
-                                    <Select {...field}>
-                                        <option value="">Select Order Type</option>
+                                    <select {...field}>
+
                                         <option value="Market">Market</option>
                                         <option value="Limit">Limit</option>
                                         <option value="Stop">Stop</option>
-                                    </Select>
+                                    </select>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
