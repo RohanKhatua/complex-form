@@ -10,7 +10,7 @@ import 'tailwindcss/tailwind.css';
 import useStore from '@/store';
 
 const BacktestingForm: React.FC = () => {
-    const { formData, setFormData } = useStore();
+    const { setFormData } = useStore();
     const form = useForm<BacktestingForm>({
         resolver: zodResolver(BacktestingFormSchema),
         defaultValues: {
@@ -232,7 +232,7 @@ const SuperStrategySection: React.FC<{
     superIndex: number;
     removeSuperStrategy: (index: number) => void;
     errors: any;
-}> = ({ control, register, superStrategy, superIndex, removeSuperStrategy, errors }) => {
+}> = ({ control, superIndex, removeSuperStrategy }) => {
     const { fields: strategyFields, append: appendStrategy, remove: removeStrategy } = useFieldArray({
         control,
         name: `superStrategies.${superIndex}.strategies` as const,
