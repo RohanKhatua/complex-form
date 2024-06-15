@@ -179,7 +179,7 @@ const BacktestingForm: React.FC = () => {
                             <FormItem>
                                 <FormLabel>Asset Selection</FormLabel>
                                 <FormControl>
-                                    <Input className="bg-gray-700 text-white" placeholder="Asset Selection" {...field} />
+                                    <Input className="" placeholder="Asset Selection" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -264,7 +264,7 @@ const BacktestingForm: React.FC = () => {
                             <FormItem>
                                 <FormLabel>Position Size</FormLabel>
                                 <FormControl>
-                                    <Input className="bg-gray-700 text-white" placeholder="Position Size" {...field} />
+                                    <Input className="" placeholder="Position Size" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -277,7 +277,7 @@ const BacktestingForm: React.FC = () => {
                             <FormItem>
                                 <FormLabel>Stop Loss</FormLabel>
                                 <FormControl>
-                                    <Input className="bg-gray-700 text-white" placeholder="Stop Loss" {...field} />
+                                    <Input className="" placeholder="Stop Loss" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -290,7 +290,7 @@ const BacktestingForm: React.FC = () => {
                             <FormItem>
                                 <FormLabel>Take Profit</FormLabel>
                                 <FormControl>
-                                    <Input className="bg-gray-700 text-white" placeholder="Take Profit" {...field} />
+                                    <Input className="" placeholder="Take Profit" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -325,10 +325,10 @@ const SuperStrategySection: React.FC<{
                     name={`superStrategies.${superIndex}.name`}
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Super Strategy Name</FormLabel>
                             <FormControl>
-                                <Input className="bg-gray-700 text-white" placeholder="e.g., Trend Following" {...field} />
+                                <Input className="" placeholder="Super Strategy Name" {...field} />
                             </FormControl>
+                            <FormDescription>A name for your super strategy, e.g. RSI Entry</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
@@ -343,10 +343,10 @@ const SuperStrategySection: React.FC<{
                             name={`superStrategies.${superIndex}.strategies.${strategyIndex}.type`}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Strategy Type</FormLabel>
                                     <FormControl>
-                                        <Input className="bg-gray-700 text-white" placeholder="e.g., Moving Average" {...field} />
+                                        <Input className="" placeholder="Strategy Type" {...field} />
                                     </FormControl>
+                                    <FormDescription>The type of strategy, e.g. RSI</FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
@@ -358,18 +358,22 @@ const SuperStrategySection: React.FC<{
                                 <FormItem>
                                     <FormLabel>Parameters</FormLabel>
                                     <FormControl>
-                                        <Input className="bg-gray-700 text-white" placeholder="e.g., MA Period" {...field} />
+                                        <Input className="" placeholder="MA Period" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <Button type="button" variant="destructive" onClick={() => removeStrategy(strategyIndex)}>Remove Strategy</Button>
+                        <div className='py-2'>
+                            <Button className='' type="button" variant="destructive" onClick={() => removeStrategy(strategyIndex)}>Remove Strategy</Button>
+                        </div>
                     </div>
                 ))}
-                <Button type="button" onClick={() => appendStrategy({ type: '', parameters: '' })}>
-                    Add Strategy
-                </Button>
+                <div className='py-2'>
+                    <Button className='' type="button" onClick={() => appendStrategy({ type: '', parameters: '' })}>
+                        Add Strategy
+                    </Button>
+                </div>
             </div>
             <Button type="button" variant="destructive" onClick={() => removeSuperStrategy(superIndex)}>Remove Super Strategy</Button>
         </div>
