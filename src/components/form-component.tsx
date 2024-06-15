@@ -85,7 +85,6 @@ const BacktestingForm: React.FC = () => {
                         name="generalSettings.startDate"
                         render={({ field }) => (
                             <FormItem className="flex flex-col">
-                                <FormLabel>Start Date</FormLabel>
                                 <Popover>
                                     <PopoverTrigger asChild>
                                         <FormControl>
@@ -129,7 +128,6 @@ const BacktestingForm: React.FC = () => {
                         name="generalSettings.endDate"
                         render={({ field }) => (
                             <FormItem className="flex flex-col">
-                                <FormLabel>End Date</FormLabel>
                                 <Popover>
                                     <PopoverTrigger asChild>
                                         <FormControl>
@@ -177,7 +175,6 @@ const BacktestingForm: React.FC = () => {
                         name="dataSettings.assetSelection"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Asset Selection</FormLabel>
                                 <FormControl>
                                     <Input className="" placeholder="Asset Selection" {...field} />
                                 </FormControl>
@@ -237,7 +234,8 @@ const BacktestingForm: React.FC = () => {
                         control={form.control}
                         name="executionSettings.orderType"
                         render={({ field }) => (
-                            <FormItem>                                
+                            <FormItem>
+                                <FormLabel>Order Type</FormLabel>
                                 <FormControl>
                                     <Select onValueChange={field.onChange} {...field}>
 
@@ -261,7 +259,7 @@ const BacktestingForm: React.FC = () => {
                         control={form.control}
                         name="executionSettings.positionSize"
                         render={({ field }) => (
-                            <FormItem>                                
+                            <FormItem>
                                 <FormControl>
                                     <Input className="" placeholder="Position Size" {...field} />
                                 </FormControl>
@@ -275,7 +273,7 @@ const BacktestingForm: React.FC = () => {
                         name="executionSettings.stopLoss"
                         render={({ field }) => (
                             <FormItem>
-                                
+
                                 <FormControl>
                                     <Input className="" placeholder="Stop Loss" {...field} />
                                 </FormControl>
@@ -288,7 +286,7 @@ const BacktestingForm: React.FC = () => {
                         control={form.control}
                         name="executionSettings.takeProfit"
                         render={({ field }) => (
-                            <FormItem>                                
+                            <FormItem>
                                 <FormControl>
                                     <Input className="" placeholder="Take Profit" {...field} />
                                 </FormControl>

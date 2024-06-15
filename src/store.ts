@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import { BacktestingForm } from './types';
 
 interface StoreState {
