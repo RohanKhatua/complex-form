@@ -237,13 +237,12 @@ const BacktestingForm: React.FC = () => {
                         control={form.control}
                         name="executionSettings.orderType"
                         render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Order Type</FormLabel>
+                            <FormItem>                                
                                 <FormControl>
                                     <Select onValueChange={field.onChange} {...field}>
 
                                         <SelectTrigger>
-                                            <SelectValue placeholder="Select an order type"></SelectValue>
+                                            <SelectValue placeholder="Select Order Type"></SelectValue>
                                         </SelectTrigger>
 
                                         <SelectContent>
@@ -253,6 +252,7 @@ const BacktestingForm: React.FC = () => {
                                         </SelectContent>
                                     </Select>
                                 </FormControl>
+                                <FormDescription>The type of order you want to place</FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -261,11 +261,11 @@ const BacktestingForm: React.FC = () => {
                         control={form.control}
                         name="executionSettings.positionSize"
                         render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Position Size</FormLabel>
+                            <FormItem>                                
                                 <FormControl>
                                     <Input className="" placeholder="Position Size" {...field} />
                                 </FormControl>
+                                <FormDescription>The size of the position you want to take</FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -275,10 +275,11 @@ const BacktestingForm: React.FC = () => {
                         name="executionSettings.stopLoss"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Stop Loss</FormLabel>
+                                
                                 <FormControl>
                                     <Input className="" placeholder="Stop Loss" {...field} />
                                 </FormControl>
+                                <FormDescription>The stop loss for your position</FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -287,11 +288,11 @@ const BacktestingForm: React.FC = () => {
                         control={form.control}
                         name="executionSettings.takeProfit"
                         render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Take Profit</FormLabel>
+                            <FormItem>                                
                                 <FormControl>
                                     <Input className="" placeholder="Take Profit" {...field} />
                                 </FormControl>
+                                <FormDescription>The take profit for your position</FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
