@@ -3,35 +3,41 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { BacktestingForm } from '../types';
 import { BacktestingFormSchema } from '../types';
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '../components/ui/form';
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription } from '../components/ui/form';
 import { Input } from '../components/ui/input';
 import { Button } from '../components/ui/button';
 import 'tailwindcss/tailwind.css';
 import useStore from '@/store';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from './ui/select';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { cn } from '@/lib/utils';
+import { format } from 'date-fns';
+import { CalendarIcon } from '@radix-ui/react-icons';
+import { Calendar } from './ui/calendar';
 
 const BacktestingForm: React.FC = () => {
     const { setFormData } = useStore();
     const form = useForm<BacktestingForm>({
         resolver: zodResolver(BacktestingFormSchema),
-        defaultValues: {
-            generalSettings: {
-                strategyName: '',
-                description: '',
-                startDate: '',
-                endDate: '',
-            },
-            dataSettings: {
-                assetSelection: '',
-                dataFrequency: 'Daily',
-            },
-            superStrategies: [],
-            executionSettings: {
-                orderType: 'Limit',
-                positionSize: '',
-                stopLoss: '',
-                takeProfit: '',
-            },
-        },
+        // defaultValues: {
+        //     generalSettings: {
+        //         strategyName: '',
+        //         description: '',
+        //         startDate: new Date(),
+        //         endDate: new Date() ,
+        //     },
+        //     dataSettings: {
+        //         assetSelection: '',
+        //         dataFrequency: 'Daily',
+        //     },
+        //     superStrategies: [],
+        //     executionSettings: {
+        //         orderType: 'Limit',
+        //         positionSize: '',
+        //         stopLoss: '',
+        //         takeProfit: '',
+        //     },
+        // },
     });
 
     const { fields: superStrategyFields, append: appendSuperStrategy, remove: removeSuperStrategy } = useFieldArray({
@@ -45,7 +51,7 @@ const BacktestingForm: React.FC = () => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 p-4 bg-gray-100 rounded-lg text-black">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 p-4">
                 <h2 className="text-xl font-bold">General Settings</h2>
                 <div className="space-y-2">
                     <FormField
@@ -53,10 +59,10 @@ const BacktestingForm: React.FC = () => {
                         name="generalSettings.strategyName"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Strategy Name</FormLabel>
                                 <FormControl>
-                                    <Input className="bg-gray-700 text-white" placeholder="Strategy Name" {...field} />
+                                    <Input className="" placeholder="Strategy Name" {...field} />
                                 </FormControl>
+                                <FormDescription>A name for your strategy - so that you can easily remember it</FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -66,10 +72,10 @@ const BacktestingForm: React.FC = () => {
                         name="generalSettings.description"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Description</FormLabel>
                                 <FormControl>
-                                    <Input className="bg-gray-700 text-white" placeholder="Description" {...field} />
+                                    <Input className="" placeholder="Description" {...field} />
                                 </FormControl>
+                                <FormDescription>A brief description of your strategy</FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -78,11 +84,42 @@ const BacktestingForm: React.FC = () => {
                         control={form.control}
                         name="generalSettings.startDate"
                         render={({ field }) => (
-                            <FormItem>
+                            <FormItem className="flex flex-col">
                                 <FormLabel>Start Date</FormLabel>
-                                <FormControl>
-                                    <Input type="date" className="bg-gray-700 text-white" {...field} />
-                                </FormControl>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <FormControl>
+                                            <Button
+                                                variant={"outline"}
+                                                className={cn(
+                                                    "w-[240px] pl-3 text-left font-normal",
+                                                    !field.value && "text-muted-foreground"
+                                                )}
+                                            >
+                                                {field.value ? (
+                                                    format(field.value, "PPP")
+                                                ) : (
+                                                    <span>Start Date</span>
+                                                )}
+                                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                            </Button>
+                                        </FormControl>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-auto p-0" align="start">
+                                        <Calendar
+                                            mode="single"
+                                            selected={field.value}
+                                            onSelect={field.onChange}
+                                            disabled={(date) =>
+                                                date < new Date() || date < new Date("1900-01-01")
+                                            }
+                                            initialFocus
+                                        />
+                                    </PopoverContent>
+                                </Popover>
+                                <FormDescription>
+                                    The date from which you want to start backtesting your strategy
+                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -91,11 +128,42 @@ const BacktestingForm: React.FC = () => {
                         control={form.control}
                         name="generalSettings.endDate"
                         render={({ field }) => (
-                            <FormItem>
+                            <FormItem className="flex flex-col">
                                 <FormLabel>End Date</FormLabel>
-                                <FormControl>
-                                    <Input type="date" className="bg-gray-700 text-white" {...field} />
-                                </FormControl>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <FormControl>
+                                            <Button
+                                                variant={"outline"}
+                                                className={cn(
+                                                    "w-[240px] pl-3 text-left font-normal",
+                                                    !field.value && "text-muted-foreground"
+                                                )}
+                                            >
+                                                {field.value ? (
+                                                    format(field.value, "PPP")
+                                                ) : (
+                                                    <span>End Date</span>
+                                                )}
+                                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                            </Button>
+                                        </FormControl>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-auto p-0" align="start">
+                                        <Calendar
+                                            mode="single"
+                                            selected={field.value}
+                                            onSelect={field.onChange}
+                                            disabled={(date) =>
+                                                date < new Date() || date < new Date("1900-01-01")
+                                            }
+                                            initialFocus
+                                        />
+                                    </PopoverContent>
+                                </Popover>
+                                <FormDescription>
+                                    The date on which you want to end backtesting your strategy
+                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -124,12 +192,17 @@ const BacktestingForm: React.FC = () => {
                             <FormItem>
                                 <FormLabel>Data Frequency</FormLabel>
                                 <FormControl>
-                                    <select {...field}>
+                                    <Select onValueChange={field.onChange} {...field}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select an interval"></SelectValue>
+                                        </SelectTrigger>
 
-                                        <option value="Daily">Daily</option>
-                                        <option value="Weekly">Weekly</option>
-                                        <option value="Monthly">Monthly</option>
-                                    </select>
+                                        <SelectContent>
+                                            <SelectItem value="Daily">Daily</SelectItem>
+                                            <SelectItem value="Weekly">Weekly</SelectItem>
+                                            <SelectItem value="Monthly">Monthly</SelectItem>
+                                        </SelectContent>
+                                    </Select>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -167,12 +240,18 @@ const BacktestingForm: React.FC = () => {
                             <FormItem>
                                 <FormLabel>Order Type</FormLabel>
                                 <FormControl>
-                                    <select {...field}>
+                                    <Select onValueChange={field.onChange} {...field}>
 
-                                        <option value="Market">Market</option>
-                                        <option value="Limit">Limit</option>
-                                        <option value="Stop">Stop</option>
-                                    </select>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select an order type"></SelectValue>
+                                        </SelectTrigger>
+
+                                        <SelectContent>
+                                            <SelectItem value="Market">Market</SelectItem>
+                                            <SelectItem value="Limit">Limit</SelectItem>
+                                            <SelectItem value="Stop">Stop</SelectItem>
+                                        </SelectContent>
+                                    </Select>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

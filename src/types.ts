@@ -3,13 +3,21 @@ import { z } from 'zod';
 export const GeneralSettingsSchema = z.object({
     strategyName: z.string().min(1, "Strategy Name is required").max(100, "Strategy Name is too long"),
     description: z.string().max(500, "Description is too long").optional(),
-    startDate: z.string().refine(val => !isNaN(Date.parse(val)), {
+    startDate: z.date().refine(val => !isNaN(val.getTime()), {
         message: "Invalid date",
     }),
-    endDate: z.string().refine(val => !isNaN(Date.parse(val)), {
+    endDate: z.date().refine(val => !isNaN(val.getTime()), {
         message: "Invalid date",
     }),
-});
+}).refine(data => {
+    if (data.startDate >= data.endDate) {
+        return {
+            startDate: "Start Date must be before End Date",
+            endDate: "End Date must be after Start Date",
+        };
+    }
+    return true;
+})
 
 export const DataSettingsSchema = z.object({
     assetSelection: z.string().min(1, "Asset Selection is required"),
